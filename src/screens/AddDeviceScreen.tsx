@@ -4,11 +4,12 @@ import { NetFocusHeader, SurveillanceBackground } from '../components/NetFocusCh
 import { useNetFocus } from '../state';
 import { DeviceType, ProtocolType } from '../types';
 import { colors } from '../theme';
+import { AppIcon, AppIconName } from '../components/AppIcon';
 
-const DEVICE_TYPES: { type: DeviceType; icon: string }[] = [
-  { type: DeviceType.IP_CAMERA, icon: '◉' },
-  { type: DeviceType.NVR, icon: '▰' },
-  { type: DeviceType.DVR, icon: '▣' },
+const DEVICE_TYPES: { type: DeviceType; icon: AppIconName }[] = [
+  { type: DeviceType.IP_CAMERA, icon: 'cctv' },
+  { type: DeviceType.NVR, icon: 'server-network' },
+  { type: DeviceType.DVR, icon: 'video-input-component' },
 ];
 
 export function AddDeviceScreen() {
@@ -23,14 +24,14 @@ export function AddDeviceScreen() {
   };
 
   const renderField = (
-    icon: string,
+    icon: AppIconName,
     label: string,
     value: string,
     onChangeText: (value: string) => void,
     options: { keyboardType?: 'default' | 'decimal-pad' | 'number-pad'; password?: boolean } = {},
   ) => (
     <View style={styles.fieldRow}>
-      <Text style={styles.fieldIcon}>{icon}</Text>
+      <AppIcon name={icon} size={20} color={colors.textWhite} style={styles.fieldIcon} />
       <View style={styles.fieldLabel}>
         <Text style={styles.fieldLabelText}>
           {label}<Text style={styles.required}> *</Text>
@@ -54,7 +55,11 @@ export function AddDeviceScreen() {
             onPress={actions.toggleNewDevicePasswordVisible}
             accessibilityLabel={state.newDevicePasswordVisible ? 'Hide password' : 'Show password'}
           >
-            <Text style={styles.passwordToggleText}>{state.newDevicePasswordVisible ? '◉' : '⊘'}</Text>
+            <AppIcon
+              name={state.newDevicePasswordVisible ? 'eye-outline' : 'eye-off-outline'}
+              size={18}
+              color={colors.textWhite}
+            />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -72,7 +77,7 @@ export function AddDeviceScreen() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.titleBanner}>
-            <Text style={styles.bannerIcon}>⊕</Text>
+            <AppIcon name="plus-circle-outline" size={43} color={colors.textWhite} style={styles.bannerIcon} />
             <View style={styles.bannerText}>
               <Text style={styles.bannerEnglish}>Add Device</Text>
             </View>
@@ -90,8 +95,8 @@ export function AddDeviceScreen() {
                   activeOpacity={0.85}
                   onPress={() => actions.setNewDeviceType(type)}
                 >
-                  {active ? <Text style={styles.selectedCheck}>✓</Text> : null}
-                  <Text style={styles.deviceTypeIcon}>{icon}</Text>
+                  {active ? <AppIcon name="check-circle" size={20} color={colors.brightSkyCyan} style={styles.selectedCheck} /> : null}
+                  <AppIcon name={icon} size={29} color={colors.textWhite} style={styles.deviceTypeIcon} />
                   <Text style={styles.deviceTypeName}>{type}</Text>
                 </TouchableOpacity>
               );
@@ -99,14 +104,17 @@ export function AddDeviceScreen() {
           </View>
 
           <View style={styles.formPanel}>
-            {renderField('▣', 'Device Name', state.newDeviceName, actions.setNewDeviceName)}
-            {renderField('IP', 'IP Address', state.newDeviceIp, actions.setNewDeviceIp, { keyboardType: 'decimal-pad' })}
-            {renderField('▤', 'Port', state.newDevicePort, actions.setNewDevicePort, { keyboardType: 'number-pad' })}
-            {renderField('♙', 'Username', state.newDeviceUsername, actions.setNewDeviceUsername)}
-            {renderField('♙', 'Password', state.newDevicePassword, actions.setNewDevicePassword, { password: true })}
+            {renderField('devices', 'Device Name', state.newDeviceName, actions.setNewDeviceName)}
+            {renderField('ip-network-outline', 'IP Address', state.newDeviceIp, actions.setNewDeviceIp, { keyboardType: 'decimal-pad' })}
+            {renderField('ethernet', 'Port', state.newDevicePort, actions.setNewDevicePort, { keyboardType: 'number-pad' })}
+            {renderField('account-outline', 'Username', state.newDeviceUsername, actions.setNewDeviceUsername)}
+            {renderField('lock-outline', 'Password', state.newDevicePassword, actions.setNewDevicePassword, { password: true })}
 
             <View style={styles.protocolSection}>
-              <Text style={styles.protocolHeading}>⛓  Connection Protocol</Text>
+              <View style={styles.protocolHeadingRow}>
+                <AppIcon name="link-variant" size={18} color={colors.textWhite} />
+                <Text style={styles.protocolHeading}>Connection Protocol</Text>
+              </View>
               <View style={styles.protocolRow}>
                 {[ProtocolType.ONVIF, ProtocolType.RTSP].map((protocol) => {
                   const active = state.newDeviceProtocol === protocol;
@@ -135,13 +143,13 @@ export function AddDeviceScreen() {
 
         <View style={styles.actionRow}>
           <TouchableOpacity style={styles.testButton} activeOpacity={0.85} onPress={handleTest}>
-            <Text style={styles.actionIcon}>▷</Text>
+            <AppIcon name="play-circle-outline" size={28} color={colors.textWhite} style={styles.actionIcon} />
             <View style={styles.actionCopy}>
               <Text style={styles.testButtonText}>Test Connection</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.addButton} activeOpacity={0.85} onPress={actions.addDevice}>
-            <Text style={styles.addIcon}>⊕</Text>
+            <AppIcon name="plus-circle-outline" size={30} color="#062b48" style={styles.addIcon} />
             <View style={styles.actionCopy}>
               <Text style={styles.addButtonText}>Add Device</Text>
             </View>
@@ -164,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#075ba9',
     overflow: 'hidden',
   },
-  bannerIcon: { color: colors.textWhite, fontSize: 43, lineHeight: 50, fontWeight: '700' as const, marginRight: 13 },
+  bannerIcon: { marginRight: 13 },
   bannerText: { zIndex: 1 },
   bannerEnglish: { color: colors.textWhite, fontSize: 16, lineHeight: 20, fontWeight: '700' as const },
   bannerCut: {
@@ -190,8 +198,8 @@ const styles = StyleSheet.create({
     borderRadius: 13,
   },
   deviceTypeActive: { backgroundColor: '#075082', borderWidth: 2, borderColor: colors.brightSkyCyan },
-  selectedCheck: { position: 'absolute', top: 5, right: 7, color: '#061a34', backgroundColor: colors.brightSkyCyan, overflow: 'hidden', borderRadius: 10, width: 20, height: 20, textAlign: 'center', fontWeight: '900' as const },
-  deviceTypeIcon: { color: colors.textWhite, fontSize: 29, lineHeight: 34, fontWeight: '800' as const },
+  selectedCheck: { position: 'absolute', top: 5, right: 7 },
+  deviceTypeIcon: { lineHeight: 34 },
   deviceTypeName: { color: colors.textWhite, fontSize: 13, lineHeight: 18, fontWeight: '800' as const, textAlign: 'center' },
   formPanel: {
     marginHorizontal: 11,
@@ -209,7 +217,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#264c70',
   },
-  fieldIcon: { width: 31, color: colors.textWhite, fontSize: 20, textAlign: 'center', fontWeight: '700' as const },
+  fieldIcon: { width: 31, textAlign: 'center' },
   fieldLabel: { width: '42%', paddingHorizontal: 6 },
   fieldLabelText: { color: colors.textWhite, fontSize: 10, lineHeight: 14, fontWeight: '700' as const },
   required: { color: '#ff5964', fontWeight: '900' as const },
@@ -227,9 +235,9 @@ const styles = StyleSheet.create({
   },
   passwordInput: { paddingRight: 39 },
   passwordToggle: { position: 'absolute', right: 7, top: 0, bottom: 0, width: 30, alignItems: 'center', justifyContent: 'center' },
-  passwordToggleText: { color: colors.textWhite, fontSize: 18 },
   protocolSection: { paddingVertical: 12, paddingHorizontal: 8 },
-  protocolHeading: { color: colors.textWhite, fontSize: 13, fontWeight: '800' as const, marginBottom: 8 },
+  protocolHeadingRow: { flexDirection: 'row', alignItems: 'center', gap: 7, marginBottom: 8 },
+  protocolHeading: { color: colors.textWhite, fontSize: 13, fontWeight: '800' as const },
   protocolRow: { flexDirection: 'row', gap: 10 },
   protocolButton: {
     flex: 1,
@@ -253,8 +261,8 @@ const styles = StyleSheet.create({
   actionRow: { flexDirection: 'row', gap: 9, paddingHorizontal: 11, paddingTop: 5, paddingBottom: 9 },
   testButton: { flex: 1, minHeight: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#092441', borderWidth: 1.5, borderColor: '#8bb6d5', borderRadius: 14, paddingHorizontal: 5 },
   addButton: { flex: 1, minHeight: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#08b9e8', borderWidth: 1.5, borderColor: '#24e5ff', borderRadius: 14, paddingHorizontal: 5 },
-  actionIcon: { color: colors.textWhite, fontSize: 28, lineHeight: 34, marginRight: 6 },
-  addIcon: { color: '#062b48', fontSize: 30, lineHeight: 34, marginRight: 6 },
+  actionIcon: { lineHeight: 34, marginRight: 6 },
+  addIcon: { lineHeight: 34, marginRight: 6 },
   actionCopy: { alignItems: 'center', flexShrink: 1 },
   testButtonText: { color: colors.textWhite, fontSize: 12, lineHeight: 16, fontWeight: '700' as const },
   addButtonText: { color: '#062b48', fontSize: 12, lineHeight: 16, fontWeight: '700' as const },

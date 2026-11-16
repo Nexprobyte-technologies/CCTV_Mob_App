@@ -3,12 +3,13 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { useNetFocus } from '../state';
 import { AppScreen } from '../types';
 import { colors, spacing } from '../theme';
+import { AppIcon, AppIconName } from '../components/AppIcon';
 
-const FEATURES = [
-  { icon: '✓', label: 'Secure' },
-  { icon: '☁', label: 'Remote' },
-  { icon: '♧', label: 'Alerts' },
-  { icon: '▦', label: 'Multi View' },
+const FEATURES: { icon: AppIconName; label: string }[] = [
+  { icon: 'shield-check', label: 'Secure' },
+  { icon: 'cloud-outline', label: 'Remote' },
+  { icon: 'bell-outline', label: 'Alerts' },
+  { icon: 'view-grid-outline', label: 'Multi View' },
 ];
 
 export function WelcomeScreen() {
@@ -38,7 +39,12 @@ export function WelcomeScreen() {
         <View style={styles.features}>
           {FEATURES.map((feature) => (
             <View key={feature.label} style={styles.feature}>
-              <Text style={styles.featureIcon}>{feature.icon}</Text>
+              <AppIcon
+                name={feature.icon}
+                size={27}
+                color={colors.royalBlueDark}
+                style={styles.featureIcon}
+              />
               <Text style={styles.featureLabel}>{feature.label}</Text>
             </View>
           ))}
@@ -50,7 +56,10 @@ export function WelcomeScreen() {
           onPress={() => actions.navigateTo(AppScreen.Login)}
           accessibilityRole="button"
         >
-          <Text style={styles.primaryButtonText}>Get Started  →</Text>
+          <View style={styles.primaryButtonContent}>
+            <Text style={styles.primaryButtonText}>Get Started</Text>
+            <AppIcon name="arrow-right" size={22} color={colors.textWhite} />
+          </View>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   feature: { flex: 1, alignItems: 'center', justifyContent: 'center', borderRightWidth: 1, borderColor: '#B9D7ED' },
-  featureIcon: { color: colors.royalBlueDark, fontSize: 27, lineHeight: 34, fontWeight: '700' as const },
+  featureIcon: { lineHeight: 34 },
   featureLabel: { color: colors.textInkNavy, fontSize: 13, fontWeight: '700' as const, marginTop: spacing.xs },
   primaryButton: {
     width: '72%',
@@ -96,5 +105,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.xl,
     elevation: 3,
   },
+  primaryButtonContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   primaryButtonText: { color: colors.textWhite, fontSize: 20, fontWeight: '800' as const },
 });

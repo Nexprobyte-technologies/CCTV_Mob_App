@@ -9,6 +9,7 @@ import {
 import { useNetFocus } from '../state';
 import { AppScreen, CameraChannel } from '../types';
 import { colors } from '../theme';
+import { AppIcon, AppIconName } from '../components/AppIcon';
 
 const COMPATIBLE_BRANDS = ['HIKVISION', 'CP PLUS', 'TVT', 'ONVIF', 'RTSP'];
 const GRID_COUNTS = [1, 4, 9, 16];
@@ -54,13 +55,19 @@ export function LiveViewScreen() {
     );
   };
 
-  const controls = [
-    { key: 'ptz', icon: '✥', title: 'PTZ', onPress: () => actions.openPlayback(true) },
-    { key: 'snapshot', icon: '◎', title: 'Snapshot', onPress: actions.captureSnapshot },
-    { key: 'record', icon: '▣', title: 'Record', onPress: actions.toggleRecordingActiveChannel },
-    { key: 'audio', icon: '◖', title: state.isAudioEnabled ? 'Audio On' : 'Audio', onPress: actions.toggleAudio },
-    { key: 'talk', icon: '♩', title: state.isTalkEnabled ? 'Talk On' : 'Talk', onPress: actions.toggleTalk },
-    { key: 'quality', icon: 'HD', title: 'SD/HD', onPress: actions.toggleStreamQuality },
+  const controls: { key: string; icon: AppIconName; title: string; onPress: () => void }[] = [
+    { key: 'ptz', icon: 'crosshairs-gps', title: 'PTZ', onPress: () => actions.openPlayback(true) },
+    { key: 'snapshot', icon: 'camera-outline', title: 'Snapshot', onPress: actions.captureSnapshot },
+    { key: 'record', icon: 'record-circle-outline', title: 'Record', onPress: actions.toggleRecordingActiveChannel },
+    { key: 'audio', icon: 'volume-high', title: state.isAudioEnabled ? 'Audio On' : 'Audio', onPress: actions.toggleAudio },
+    { key: 'talk', icon: 'microphone-outline', title: state.isTalkEnabled ? 'Talk On' : 'Talk', onPress: actions.toggleTalk },
+    { key: 'quality', icon: 'video-high-definition', title: 'SD/HD', onPress: actions.toggleStreamQuality },
+  ];
+  const tabs: { key: string; icon: AppIconName; label: string; screen: AppScreen }[] = [
+    { key: 'live', icon: 'cctv', label: 'Live View', screen: AppScreen.LiveView },
+    { key: 'playback', icon: 'play-box-multiple-outline', label: 'Playback', screen: AppScreen.Playback },
+    { key: 'devices', icon: 'server-network', label: 'Devices', screen: AppScreen.Devices },
+    { key: 'settings', icon: 'cog-outline', label: 'Settings', screen: AppScreen.Settings },
   ];
 
   return (
@@ -68,19 +75,14 @@ export function LiveViewScreen() {
       <View style={styles.screen}>
         <NetFocusHeader />
         <View style={styles.topTabs}>
-          {[
-            { key: 'live', icon: '▣', label: 'Live View', screen: AppScreen.LiveView },
-            { key: 'playback', icon: '▷', label: 'Playback', screen: AppScreen.Playback },
-            { key: 'devices', icon: '▰', label: 'Devices', screen: AppScreen.Devices },
-            { key: 'settings', icon: '⚙', label: 'Settings', screen: AppScreen.Settings },
-          ].map((tab) => (
+          {tabs.map((tab) => (
             <TouchableOpacity
               key={tab.key}
               style={[styles.topTab, tab.key === 'live' && styles.topTabActive]}
               activeOpacity={0.8}
               onPress={() => openTab(tab.screen)}
             >
-              <Text style={styles.topTabIcon}>{tab.icon}</Text>
+              <AppIcon name={tab.icon} size={20} color={colors.textWhite} style={styles.topTabIcon} />
               <Text style={styles.topTabLabel}>{tab.label}</Text>
             </TouchableOpacity>
           ))}
@@ -109,7 +111,12 @@ export function LiveViewScreen() {
               <Text style={styles.onlineText}>Online ({state.channels.filter((channel) => channel.isOnline).length})</Text>
             </View>
             <TouchableOpacity onPress={actions.toggleLiveFullscreen} accessibilityLabel="Toggle fullscreen">
-              <Text style={styles.fullscreenIcon}>{state.isLiveFullscreen ? '⊡' : '⛶'}</Text>
+              <AppIcon
+                name={state.isLiveFullscreen ? 'fullscreen-exit' : 'fullscreen'}
+                size={23}
+                color={colors.textWhite}
+                style={styles.fullscreenIcon}
+              />
             </TouchableOpacity>
           </View>
 
@@ -122,7 +129,10 @@ export function LiveViewScreen() {
               <CameraThumbnail channelId={selectedChannel.id} style={styles.fullscreenImage} />
               <View style={styles.fullscreenCaption}>
                 <Text style={styles.fullscreenName}>{selectedChannel.code} · {selectedChannel.nameEn}</Text>
-                <Text style={styles.fullscreenStatus}>● LIVE</Text>
+                <View style={styles.fullscreenStatus}>
+                  <AppIcon name="circle" size={9} color={colors.onlineGreenBright} />
+                  <Text style={styles.fullscreenStatusText}>LIVE</Text>
+                </View>
               </View>
             </TouchableOpacity>
           ) : (
@@ -137,7 +147,7 @@ export function LiveViewScreen() {
                 activeOpacity={0.8}
                 onPress={() => actions.setLiveGridCount(count)}
               >
-                <Text style={styles.gridOptionIcon}>{count === 1 ? '□' : count === 4 ? '▦' : count === 9 ? '▦' : '▦'}</Text>
+                <AppIcon name="view-grid-outline" size={23} color={colors.textWhite} style={styles.gridOptionIcon} />
                 <View>
                   <Text style={styles.gridOptionValue}>{count === 1 ? '' : count}</Text>
                   <Text style={styles.gridOptionLabel}>{count === 1 ? 'Single Camera' : `${count} Cameras`}</Text>
@@ -149,14 +159,16 @@ export function LiveViewScreen() {
           <View style={styles.controlBar}>
             {controls.map((control) => (
               <TouchableOpacity key={control.key} style={styles.control} activeOpacity={0.8} onPress={control.onPress}>
-                <Text style={styles.controlIcon}>{control.icon}</Text>
+                <AppIcon name={control.icon} size={21} color={colors.textWhite} style={styles.controlIcon} />
                 <Text style={styles.controlTitle}>{control.title}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
           <TouchableOpacity style={styles.connectionBar} onPress={() => actions.navigateTo(AppScreen.Devices)}>
-            <Text style={styles.connectionCheck}>✓</Text>
+            <View style={styles.connectionCheck}>
+              <AppIcon name="check" size={13} color={colors.textWhite} />
+            </View>
             <Text style={styles.connectionItem}>Device : {state.devices[0]?.name ?? 'NetFocus NVR'}</Text>
             <Text style={styles.connectionItem}>Channels : {state.channels.length} / {state.channels.length}</Text>
             <Text style={styles.connectionStatus}>Connected</Text>
@@ -184,7 +196,7 @@ const styles = StyleSheet.create({
   },
   topTab: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 5, borderRightWidth: 1, borderColor: '#315b7d' },
   topTabActive: { backgroundColor: '#0879d3', borderRadius: 17 },
-  topTabIcon: { color: colors.textWhite, fontSize: 20, lineHeight: 24 },
+  topTabIcon: { lineHeight: 24 },
   topTabLabel: { color: colors.textWhite, fontSize: 10, lineHeight: 13, fontWeight: '700' as const },
   scroll: { flex: 1 },
   content: { padding: 8, paddingBottom: 10 },
@@ -206,7 +218,7 @@ const styles = StyleSheet.create({
   onlineLabel: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   onlineDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.onlineGreenBright },
   onlineText: { color: colors.textWhite, fontSize: 10, fontWeight: '700' as const },
-  fullscreenIcon: { color: colors.textWhite, fontSize: 23, lineHeight: 28 },
+  fullscreenIcon: { lineHeight: 28 },
   cameraGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 5 },
   cameraTile: { aspectRatio: 1.48, overflow: 'hidden', borderRadius: 8, borderWidth: 1, borderColor: '#8bb8d1', marginBottom: 1 },
   tileOffline: { opacity: 0.55 },
@@ -231,7 +243,8 @@ const styles = StyleSheet.create({
   fullscreenImage: { width: '100%', height: '100%' },
   fullscreenCaption: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: 10, backgroundColor: 'rgba(0,0,0,0.65)', flexDirection: 'row', justifyContent: 'space-between' },
   fullscreenName: { color: colors.textWhite, fontWeight: '700' as const },
-  fullscreenStatus: { color: colors.onlineGreenBright, fontSize: 11, fontWeight: '800' as const },
+  fullscreenStatus: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  fullscreenStatusText: { color: colors.onlineGreenBright, fontSize: 11, fontWeight: '800' as const },
   gridSelector: {
     minHeight: 56,
     flexDirection: 'row',
@@ -244,7 +257,7 @@ const styles = StyleSheet.create({
   },
   gridOption: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, borderRightWidth: 1, borderColor: '#315b7d' },
   gridOptionActive: { backgroundColor: '#087cdd' },
-  gridOptionIcon: { color: colors.textWhite, fontSize: 23, lineHeight: 27 },
+  gridOptionIcon: { lineHeight: 27 },
   gridOptionValue: { color: colors.textWhite, fontSize: 16, lineHeight: 18, fontWeight: '800' as const },
   gridOptionLabel: { color: colors.textWhite, fontSize: 8, lineHeight: 11 },
   controlBar: {
@@ -258,7 +271,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#08264a',
   },
   control: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 5, borderRightWidth: 1, borderColor: '#315b7d' },
-  controlIcon: { color: colors.textWhite, fontSize: 21, lineHeight: 24, fontWeight: '700' as const },
+  controlIcon: { lineHeight: 24 },
   controlTitle: { color: colors.textWhite, fontSize: 9, lineHeight: 12, fontWeight: '700' as const, textAlign: 'center' },
   connectionBar: {
     minHeight: 38,
@@ -272,7 +285,7 @@ const styles = StyleSheet.create({
     borderColor: '#3e729c',
     borderRadius: 10,
   },
-  connectionCheck: { color: colors.textWhite, backgroundColor: colors.onlineGreen, width: 18, height: 18, borderRadius: 9, textAlign: 'center', overflow: 'hidden', fontWeight: '900' as const, fontSize: 13 },
+  connectionCheck: { backgroundColor: colors.onlineGreen, width: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center' },
   connectionItem: { color: colors.textWhite, fontSize: 8, fontWeight: '600' as const },
   connectionStatus: { color: colors.onlineGreenBright, fontSize: 9, fontWeight: '800' as const },
 });

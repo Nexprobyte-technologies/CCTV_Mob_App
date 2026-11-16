@@ -16,6 +16,7 @@ import {
 } from '../components/NetFocusChrome';
 import { formatTimelineTime, useNetFocus } from '../state';
 import { colors } from '../theme';
+import { AppIcon, AppIconName } from '../components/AppIcon';
 
 export function PlaybackPtzScreen() {
   const { state, actions, derived } = useNetFocus();
@@ -37,14 +38,19 @@ export function PlaybackPtzScreen() {
     }
   };
 
-  const renderPtzButton = (icon: string, label: string, onPress: () => void, emphasis = false) => (
+  const renderPtzButton = (icon: AppIconName, label: string, onPress: () => void, emphasis = false) => (
     <TouchableOpacity
       style={[styles.ptzButton, emphasis && styles.ptzButtonEmphasis]}
       activeOpacity={0.75}
       onPress={onPress}
       accessibilityLabel={label}
     >
-      <Text style={[styles.ptzButtonIcon, emphasis && styles.ptzButtonIconEmphasis]}>{icon}</Text>
+      <AppIcon
+        name={icon}
+        size={19}
+        color={emphasis ? '#062243' : colors.textWhite}
+        style={styles.ptzButtonIcon}
+      />
       <Text style={[styles.ptzButtonLabel, emphasis && styles.ptzButtonLabelEmphasis]}>{label}</Text>
     </TouchableOpacity>
   );
@@ -60,7 +66,7 @@ export function PlaybackPtzScreen() {
             onPress={() => actions.setPlaybackTab(false)}
             activeOpacity={0.85}
           >
-            <Text style={styles.modeTabIcon}>▷</Text>
+            <AppIcon name="play-box-multiple-outline" size={17} color={colors.textWhite} style={styles.modeTabIcon} />
             <Text style={[styles.modeTabText, !state.playbackTabIsPtz && styles.modeTabTextActive]}>Playback</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -68,7 +74,7 @@ export function PlaybackPtzScreen() {
             onPress={() => actions.setPlaybackTab(true)}
             activeOpacity={0.85}
           >
-            <Text style={styles.modeTabIcon}>✥</Text>
+            <AppIcon name="crosshairs-gps" size={17} color={colors.textWhite} style={styles.modeTabIcon} />
             <Text style={[styles.modeTabText, state.playbackTabIsPtz && styles.modeTabTextActive]}>PTZ Control</Text>
           </TouchableOpacity>
         </View>
@@ -93,7 +99,10 @@ export function PlaybackPtzScreen() {
             <View style={styles.previewBottom}>
               <Text style={styles.previewChannel}>{channel?.code ?? 'CH 01'}  ·  {channel?.nameEn ?? 'Camera'}</Text>
               <TouchableOpacity onPress={changeCamera} style={styles.changeCameraButton} activeOpacity={0.8}>
-                <Text style={styles.changeCameraText}>CHANGE CAMERA  ›</Text>
+                <View style={styles.changeCameraLabel}>
+                  <Text style={styles.changeCameraText}>CHANGE CAMERA</Text>
+                  <AppIcon name="chevron-right" size={14} color="#062446" />
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -101,7 +110,10 @@ export function PlaybackPtzScreen() {
           {!state.playbackTabIsPtz ? (
             <>
               <View style={styles.datePanel}>
-                <Text style={styles.panelTitle}>▣  SELECT DATE & TIME</Text>
+                <View style={styles.panelTitleRow}>
+                  <AppIcon name="calendar-clock" size={16} color={colors.textWhite} />
+                  <Text style={styles.panelTitle}>SELECT DATE &amp; TIME</Text>
+                </View>
                 <View style={styles.dateTimeRow}>
                   <View style={styles.dateInputGroup}>
                     <Text style={styles.inputCaption}>DATE</Text>
@@ -140,7 +152,10 @@ export function PlaybackPtzScreen() {
 
               <View style={styles.timelinePanel}>
                 <View style={styles.timelineHeader}>
-                  <Text style={styles.panelTitle}>◷  RECORDING TIMELINE</Text>
+                  <View style={styles.panelTitleRow}>
+                    <AppIcon name="timeline-clock-outline" size={16} color={colors.textWhite} />
+                    <Text style={styles.panelTitle}>RECORDING TIMELINE</Text>
+                  </View>
                   <Text style={styles.timelineDate}>{state.selectedDate}</Text>
                 </View>
                 <View style={styles.timelineLabels}>
@@ -187,22 +202,22 @@ export function PlaybackPtzScreen() {
 
               <View style={styles.playbackControls}>
                 <TouchableOpacity style={styles.controlButton} onPress={() => actions.skipSeconds(-30)} activeOpacity={0.75}>
-                  <Text style={styles.controlIcon}>↶</Text>
+                  <AppIcon name="rewind-30" size={20} color={colors.textWhite} style={styles.controlIcon} />
                   <Text style={styles.controlCaption}>-30s</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.controlButton} onPress={() => actions.skipSeconds(-10)} activeOpacity={0.75}>
-                  <Text style={styles.controlIconSmall}>‹‹</Text>
+                  <AppIcon name="rewind-10" size={17} color={colors.textWhite} style={styles.controlIconSmall} />
                   <Text style={styles.controlCaption}>Back</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.playButton} onPress={actions.togglePlayPause} activeOpacity={0.8}>
-                  <Text style={styles.playIcon}>{state.isPlayingPlayback ? 'Ⅱ' : '▶'}</Text>
+                  <AppIcon name={state.isPlayingPlayback ? 'pause' : 'play'} size={18} color="#062243" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.controlButton} onPress={() => actions.skipSeconds(10)} activeOpacity={0.75}>
-                  <Text style={styles.controlIconSmall}>››</Text>
+                  <AppIcon name="fast-forward-10" size={17} color={colors.textWhite} style={styles.controlIconSmall} />
                   <Text style={styles.controlCaption}>Next</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.controlButton} onPress={() => actions.skipSeconds(30)} activeOpacity={0.75}>
-                  <Text style={styles.controlIcon}>↷</Text>
+                  <AppIcon name="fast-forward-30" size={20} color={colors.textWhite} style={styles.controlIcon} />
                   <Text style={styles.controlCaption}>+30s</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.speedButton} onPress={actions.cyclePlaybackSpeed} activeOpacity={0.75}>
@@ -213,15 +228,15 @@ export function PlaybackPtzScreen() {
 
               <View style={styles.actionRow}>
                 <TouchableOpacity style={styles.actionButton} onPress={actions.captureSnapshot} activeOpacity={0.8}>
-                  <Text style={styles.actionIcon}>▣</Text>
+                  <AppIcon name="camera-outline" size={16} color={colors.brightSkyCyan} />
                   <Text style={styles.actionText}>Snapshot</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton} onPress={actions.savePlaybackClip} activeOpacity={0.8}>
-                  <Text style={styles.actionIcon}>⇩</Text>
+                  <AppIcon name="download" size={16} color={colors.brightSkyCyan} />
                   <Text style={styles.actionText}>Save Clip</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton} onPress={() => actions.showMessage('Playback recording is ready')} activeOpacity={0.8}>
-                  <Text style={styles.actionIcon}>↗</Text>
+                  <AppIcon name="share-variant-outline" size={16} color={colors.brightSkyCyan} />
                   <Text style={styles.actionText}>Export</Text>
                 </TouchableOpacity>
               </View>
@@ -230,7 +245,10 @@ export function PlaybackPtzScreen() {
             <View style={styles.ptzPanel}>
               <View style={styles.timelineHeader}>
                 <View>
-                  <Text style={styles.panelTitle}>✥  PTZ CONTROL</Text>
+                  <View style={styles.panelTitleRow}>
+                    <AppIcon name="crosshairs-gps" size={16} color={colors.textWhite} />
+                    <Text style={styles.panelTitle}>PTZ CONTROL</Text>
+                  </View>
                   <Text style={styles.ptzSubtitle}>Pan · Tilt · Zoom · Focus · Iris</Text>
                 </View>
                 <TouchableOpacity style={styles.resetButton} onPress={actions.resetPtz} activeOpacity={0.75}>
@@ -242,25 +260,25 @@ export function PlaybackPtzScreen() {
                 <View style={styles.joystick}>
                   <View style={styles.joystickRow}>
                     <View style={styles.joystickEmpty} />
-                    {renderPtzButton('▲', 'Tilt up', () => actions.panPtz(0, -0.15))}
+                    {renderPtzButton('arrow-up', 'Tilt up', () => actions.panPtz(0, -0.15))}
                     <View style={styles.joystickEmpty} />
                   </View>
                   <View style={styles.joystickRow}>
-                    {renderPtzButton('◀', 'Pan left', () => actions.panPtz(-0.15, 0))}
-                    {renderPtzButton('◎', 'Center camera', actions.resetPtz, true)}
-                    {renderPtzButton('▶', 'Pan right', () => actions.panPtz(0.15, 0))}
+                    {renderPtzButton('arrow-left', 'Pan left', () => actions.panPtz(-0.15, 0))}
+                    {renderPtzButton('crosshairs-gps', 'Center camera', actions.resetPtz, true)}
+                    {renderPtzButton('arrow-right', 'Pan right', () => actions.panPtz(0.15, 0))}
                   </View>
                   <View style={styles.joystickRow}>
                     <View style={styles.joystickEmpty} />
-                    {renderPtzButton('▼', 'Tilt down', () => actions.panPtz(0, 0.15))}
+                    {renderPtzButton('arrow-down', 'Tilt down', () => actions.panPtz(0, 0.15))}
                     <View style={styles.joystickEmpty} />
                   </View>
                 </View>
                 <View style={styles.ptzAdjustments}>
-                  {renderPtzButton('+', 'Zoom in', () => actions.zoomPtz(0.1))}
-                  {renderPtzButton('−', 'Zoom out', () => actions.zoomPtz(-0.1))}
-                  {renderPtzButton('⌕', 'Focus', actions.stepFocus)}
-                  {renderPtzButton('◉', 'Iris', actions.stepIris)}
+                  {renderPtzButton('plus', 'Zoom in', () => actions.zoomPtz(0.1))}
+                  {renderPtzButton('minus', 'Zoom out', () => actions.zoomPtz(-0.1))}
+                  {renderPtzButton('focus-field', 'Focus', actions.stepFocus)}
+                  {renderPtzButton('circle-slice-8', 'Iris', actions.stepIris)}
                 </View>
               </View>
 
@@ -271,11 +289,11 @@ export function PlaybackPtzScreen() {
               </View>
               <View style={styles.actionRow}>
                 <TouchableOpacity style={styles.actionButton} onPress={actions.captureSnapshot} activeOpacity={0.8}>
-                  <Text style={styles.actionIcon}>▣</Text>
+                  <AppIcon name="camera-outline" size={16} color={colors.brightSkyCyan} />
                   <Text style={styles.actionText}>Snapshot</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.actionButton} onPress={actions.toggleRecordingActiveChannel} activeOpacity={0.8}>
-                  <Text style={styles.actionIcon}>●</Text>
+                  <AppIcon name="record-circle-outline" size={16} color={colors.brightSkyCyan} />
                   <Text style={styles.actionText}>Record</Text>
                 </TouchableOpacity>
               </View>
@@ -294,7 +312,7 @@ const styles = StyleSheet.create({
   modeTabs: { flexDirection: 'row', paddingHorizontal: 13, paddingTop: 10, paddingBottom: 8, gap: 9, backgroundColor: '#061a36' },
   modeTab: { flex: 1, height: 39, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#0a294c', borderWidth: 1, borderColor: '#527b9f', borderRadius: 11 },
   modeTabActive: { backgroundColor: '#09b8e9', borderColor: '#30ddff' },
-  modeTabIcon: { color: colors.textWhite, fontSize: 17, fontWeight: '800' as const },
+  modeTabIcon: { lineHeight: 24 },
   modeTabText: { color: colors.textWhite, fontSize: 13, fontWeight: '700' as const },
   modeTabTextActive: { color: '#062244' },
   scroll: { flex: 1 },
@@ -311,7 +329,9 @@ const styles = StyleSheet.create({
   previewChannel: { color: colors.textWhite, fontSize: 12, fontWeight: '800' as const, textShadowColor: '#001329', textShadowRadius: 4 },
   changeCameraButton: { backgroundColor: '#0cb8e7', paddingHorizontal: 9, paddingVertical: 7, borderRadius: 8 },
   changeCameraText: { color: '#062446', fontSize: 9, fontWeight: '900' as const },
+  changeCameraLabel: { flexDirection: 'row', alignItems: 'center', gap: 2 },
   datePanel: { marginTop: 9, padding: 11, backgroundColor: '#0a294b', borderWidth: 1, borderColor: '#29628e', borderRadius: 14 },
+  panelTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   panelTitle: { color: colors.textWhite, fontSize: 12, fontWeight: '900' as const },
   dateTimeRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 7, marginTop: 8 },
   dateInputGroup: { flex: 1.15 },
@@ -340,16 +360,14 @@ const styles = StyleSheet.create({
   currentTime: { marginLeft: 'auto', color: colors.brightSkyCyan, fontSize: 10, fontWeight: '900' as const },
   playbackControls: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, paddingVertical: 8, paddingHorizontal: 5, backgroundColor: '#0a294b', borderWidth: 1, borderColor: '#29628e', borderRadius: 14 },
   controlButton: { minWidth: 38, alignItems: 'center', justifyContent: 'center' },
-  controlIcon: { color: colors.textWhite, fontSize: 20, lineHeight: 24 },
-  controlIconSmall: { color: colors.textWhite, fontSize: 15, lineHeight: 24, fontWeight: '900' as const },
+  controlIcon: { lineHeight: 24 },
+  controlIconSmall: { lineHeight: 24 },
   controlCaption: { color: colors.textIceBlue, fontSize: 8, lineHeight: 11, fontWeight: '700' as const },
   playButton: { width: 43, height: 43, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0abce9', borderWidth: 2, borderColor: '#42e3ff' },
-  playIcon: { color: '#062243', fontSize: 18, fontWeight: '900' as const },
   speedButton: { minWidth: 39, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   speedText: { color: colors.brightSkyCyan, fontSize: 12, lineHeight: 24, fontWeight: '900' as const },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 9 },
   actionButton: { flex: 1, height: 41, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6, backgroundColor: '#0a294b', borderWidth: 1, borderColor: '#507b9f', borderRadius: 10 },
-  actionIcon: { color: colors.brightSkyCyan, fontSize: 16, fontWeight: '800' as const },
   actionText: { color: colors.textWhite, fontSize: 10, fontWeight: '700' as const },
   ptzPanel: { marginTop: 9, padding: 12, backgroundColor: '#0a294b', borderWidth: 1, borderColor: '#29628e', borderRadius: 14 },
   ptzSubtitle: { color: colors.textIceBlue, fontSize: 9, marginTop: 4 },
@@ -361,8 +379,7 @@ const styles = StyleSheet.create({
   joystickEmpty: { width: 61, height: 57 },
   ptzButton: { width: 61, height: 57, alignItems: 'center', justifyContent: 'center', backgroundColor: '#0b355c', borderWidth: 1, borderColor: '#5790b7', borderRadius: 12 },
   ptzButtonEmphasis: { backgroundColor: '#0bb8e6', borderColor: '#40e1fb' },
-  ptzButtonIcon: { color: colors.textWhite, fontSize: 19, lineHeight: 24, fontWeight: '900' as const },
-  ptzButtonIconEmphasis: { color: '#062243' },
+  ptzButtonIcon: { lineHeight: 24 },
   ptzButtonLabel: { color: colors.textIceBlue, fontSize: 8, lineHeight: 10, fontWeight: '700' as const },
   ptzButtonLabelEmphasis: { color: '#062243' },
   ptzAdjustments: { flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6 },

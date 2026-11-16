@@ -14,6 +14,7 @@ import { colors, spacing } from '../theme';
 import { AppScreen } from '../types';
 import { NetFocusArtwork } from './NetFocusArtwork';
 import { useNetFocus } from '../state';
+import { AppIcon, AppIconName } from './AppIcon';
 
 interface SurveillanceBackgroundProps {
   children?: React.ReactNode;
@@ -34,7 +35,11 @@ export function NetFocusHeader({ variant = 'main' }: { variant?: 'main' | 'back'
         onPress={variant === 'main' ? () => setDrawerOpen(true) : actions.navigateBack}
         accessibilityLabel={variant === 'main' ? 'Open menu' : 'Go back'}
       >
-        <Text style={chromeStyles.headerActionText}>{variant === 'main' ? '☰' : '‹'}</Text>
+        <AppIcon
+          name={variant === 'main' ? 'menu' : 'chevron-left'}
+          size={28}
+          color={colors.textWhite}
+        />
       </TouchableOpacity>
       <View style={chromeStyles.wordmark}>
         <Image
@@ -54,18 +59,22 @@ export function NetFocusHeader({ variant = 'main' }: { variant?: 'main' | 'back'
         }
         accessibilityLabel={variant === 'main' ? 'Show alerts' : 'More options'}
       >
-        <Text style={chromeStyles.headerActionText}>{variant === 'main' ? '♧' : '⋮'}</Text>
+        <AppIcon
+          name={variant === 'main' ? 'bell-outline' : 'dots-vertical'}
+          size={25}
+          color={colors.textWhite}
+        />
       </TouchableOpacity>
     </View>
   );
 }
 
-const bottomTabs = [
-  { key: 'home', screen: AppScreen.Home, icon: '⌂', en: 'Home' },
-  { key: 'live', screen: AppScreen.LiveView, icon: '▦', en: 'Live' },
-  { key: 'playback', screen: AppScreen.Playback, icon: '▷', en: 'Playback' },
-  { key: 'ptz', screen: AppScreen.Playback, icon: '✥', en: 'PTZ', ptz: true },
-  { key: 'settings', screen: AppScreen.Settings, icon: '♙', en: 'Me' },
+const bottomTabs: { key: string; screen: AppScreen; icon: AppIconName; en: string; ptz?: boolean }[] = [
+  { key: 'home', screen: AppScreen.Home, icon: 'home-outline', en: 'Home' },
+  { key: 'live', screen: AppScreen.LiveView, icon: 'cctv', en: 'Live' },
+  { key: 'playback', screen: AppScreen.Playback, icon: 'play-box-multiple-outline', en: 'Playback' },
+  { key: 'ptz', screen: AppScreen.Playback, icon: 'crosshairs-gps', en: 'PTZ', ptz: true },
+  { key: 'settings', screen: AppScreen.Settings, icon: 'account-outline', en: 'Me' },
 ];
 
 export function NetFocusBottomNavigation() {
@@ -101,7 +110,12 @@ export function NetFocusBottomNavigation() {
             }}
             accessibilityRole="button"
           >
-            <Text style={[chromeStyles.bottomIcon, active && chromeStyles.bottomIconActive]}>{tab.icon}</Text>
+            <AppIcon
+              name={tab.icon}
+              size={24}
+              color={active ? '#061b39' : colors.textWhite}
+              style={chromeStyles.bottomIcon}
+            />
             <Text style={[chromeStyles.bottomLabel, active && chromeStyles.bottomLabelActive]}>{tab.en}</Text>
           </TouchableOpacity>
         );
@@ -282,7 +296,6 @@ const chromeStyles = StyleSheet.create({
     borderBottomColor: '#164b7b',
   },
   headerAction: { width: 42, height: 46, alignItems: 'center', justifyContent: 'center' },
-  headerActionText: { color: colors.textWhite, fontSize: 28, lineHeight: 34 },
   wordmark: { width: 152, height: 52, alignItems: 'center', justifyContent: 'center', backgroundColor: '#e8e8e8', borderRadius: 5, overflow: 'hidden' },
   brandLogo: { width: '100%', height: '100%' },
   bottomBar: {
@@ -303,8 +316,7 @@ const chromeStyles = StyleSheet.create({
     paddingVertical: 3,
   },
   bottomTabActive: { backgroundColor: '#12a8f4' },
-  bottomIcon: { color: colors.textWhite, fontSize: 24, lineHeight: 28 },
-  bottomIconActive: { color: '#061b39' },
+  bottomIcon: { lineHeight: 28 },
   bottomLabel: { color: colors.textWhite, fontSize: 11, lineHeight: 14, fontWeight: '700' as const },
   bottomLabelActive: { color: '#041b3a' },
 });

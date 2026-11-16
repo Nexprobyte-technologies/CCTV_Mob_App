@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useNetFocus } from '../state';
 import { colors, spacing } from '../theme';
+import { AppIcon } from '../components/AppIcon';
 
 export function LoginScreen() {
   const { state, actions } = useNetFocus();
@@ -26,11 +27,11 @@ export function LoginScreen() {
         <View style={styles.card}>
           <View style={styles.titleRow}>
             <Text style={styles.title}>Login</Text>
-            <Text style={styles.cameraIcon}>▣</Text>
+            <AppIcon name="cctv" size={28} color="#061c4c" style={styles.cameraIcon} />
           </View>
 
           <View style={styles.field}>
-            <Text style={styles.fieldIcon}>♙</Text>
+            <AppIcon name="account-outline" size={23} color="#0a285b" style={styles.fieldIcon} />
             <TextInput
               style={styles.input}
               value={state.username}
@@ -45,7 +46,7 @@ export function LoginScreen() {
           </View>
 
           <View style={styles.field}>
-            <Text style={styles.fieldIcon}>▣</Text>
+            <AppIcon name="lock-outline" size={23} color="#0a285b" style={styles.fieldIcon} />
             <TextInput
               style={[styles.input, styles.passwordInput]}
               value={state.password}
@@ -62,7 +63,11 @@ export function LoginScreen() {
               style={styles.eyeButton}
               accessibilityLabel={state.isPasswordVisible ? 'Hide password' : 'Show password'}
             >
-              <Text style={styles.eyeText}>{state.isPasswordVisible ? '◉' : '⊘'}</Text>
+              <AppIcon
+                name={state.isPasswordVisible ? 'eye-outline' : 'eye-off-outline'}
+                size={20}
+                color="#0a285b"
+              />
             </TouchableOpacity>
           </View>
 
@@ -73,7 +78,7 @@ export function LoginScreen() {
               activeOpacity={0.75}
             >
               <View style={[styles.checkbox, state.rememberMe && styles.checkboxChecked]}>
-                {state.rememberMe ? <Text style={styles.checkmark}>✓</Text> : null}
+                {state.rememberMe ? <AppIcon name="check" size={14} color={colors.textWhite} /> : null}
               </View>
               <Text style={styles.rememberText}>Remember Me</Text>
             </TouchableOpacity>
@@ -100,7 +105,7 @@ export function LoginScreen() {
             activeOpacity={0.85}
             onPress={() => actions.showMessage('Contact your administrator to create an account.')}
           >
-            <Text style={styles.createIcon}>♙+</Text>
+            <AppIcon name="account-plus-outline" size={20} color="#0645ac" />
             <Text style={styles.createButtonText}>Create New Account</Text>
           </TouchableOpacity>
         </View>
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
   },
   titleRow: { minHeight: 47, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
   title: { color: '#061c4c', fontSize: 28, lineHeight: 34, fontWeight: '900' as const, textAlign: 'center', flex: 1 },
-  cameraIcon: { color: '#061c4c', fontSize: 28, fontWeight: '800' as const, position: 'absolute', right: 3 },
+  cameraIcon: { position: 'absolute', right: 3 },
   field: {
     minHeight: 52,
     flexDirection: 'row',
@@ -153,16 +158,14 @@ const styles = StyleSheet.create({
     marginTop: 9,
     backgroundColor: '#ffffff',
   },
-  fieldIcon: { width: 48, color: '#0a285b', textAlign: 'center', fontSize: 23, fontWeight: '700' as const },
+  fieldIcon: { width: 48, textAlign: 'center' },
   input: { flex: 1, height: 50, color: '#092453', paddingHorizontal: 4, paddingVertical: 0, fontSize: 15 },
   passwordInput: { paddingRight: 45 },
   eyeButton: { width: 43, height: 50, alignItems: 'center', justifyContent: 'center' },
-  eyeText: { color: '#0a285b', fontSize: 20 },
   optionsRow: { minHeight: 43, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 5 },
   rememberButton: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   checkbox: { width: 20, height: 20, borderWidth: 1.5, borderColor: '#7692b0', borderRadius: 4, alignItems: 'center', justifyContent: 'center' },
   checkboxChecked: { backgroundColor: '#0759bd', borderColor: '#0759bd' },
-  checkmark: { color: colors.textWhite, fontSize: 14, lineHeight: 17, fontWeight: '900' as const },
   rememberText: { color: '#111b2d', fontSize: 13, fontWeight: '700' as const },
   forgotText: { color: '#0649d3', fontSize: 12, fontWeight: '800' as const },
   loginButton: {
@@ -187,7 +190,6 @@ const styles = StyleSheet.create({
     borderColor: '#0870e7',
     borderRadius: 12,
   },
-  createIcon: { color: '#0645ac', fontSize: 20, fontWeight: '800' as const },
   createButtonText: { color: '#063e9b', fontSize: 15, fontWeight: '800' as const },
   equipmentArtwork: { width: '100%', height: 145, flexShrink: 0 },
 });
