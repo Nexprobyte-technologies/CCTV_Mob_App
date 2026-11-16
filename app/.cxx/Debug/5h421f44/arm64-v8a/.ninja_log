@@ -1,20 +1,7 @@
 # ninja log v5
-20	139	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-1	19883	8164524348157188	CMakeFiles/appmodules.dir/D_/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o	b5458725b4e1511e
+52	216	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
 6	22250	8164524371546370	CMakeFiles/appmodules.dir/OnLoad.cpp.o	9ecbe355bb2272a6
+1	19883	8164524348157188	CMakeFiles/appmodules.dir/D_/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o	b5458725b4e1511e
 22251	23135	8164524380724546	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/build/intermediates/cxx/Debug/5h421f44/obj/arm64-v8a/libappmodules.so	449d548c98055a30
-15	166	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-11	91	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-4	42	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-4	51	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-8	77	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-4	43	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-6	7147	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-10	176	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-5	94	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-5	60	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-11	68	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-4	52	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-5	71	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-5	76	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
-106	307	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
+1	28	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6
+2	65	0	D:/NEXPROBYTE_ALL_PROJECT/netfocus-cctv/app/.cxx/Debug/5h421f44/arm64-v8a/CMakeFiles/cmake.verify_globs	a8b7a7158c6fbbe6

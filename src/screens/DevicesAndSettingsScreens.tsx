@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SurveillanceBackground } from '../components/NetFocusChrome';
+import {
+  NetFocusBottomNavigation,
+  NetFocusHeader,
+  SurveillanceBackground,
+} from '../components/NetFocusChrome';
 import { useNetFocus } from '../state';
 import { AppScreen } from '../types';
 import { colors, spacing, radii, typography } from '../theme';
@@ -38,7 +42,7 @@ export function DevicesListScreen() {
 
   return (
     <SurveillanceBackground>
-      <View style={styles.container}>
+      <View style={styles.devicesContainer}>
         <View style={styles.header}>
           <Text style={styles.title}>Devices</Text>
           <TouchableOpacity style={styles.addButton} activeOpacity={0.85} onPress={() => actions.navigateTo(AppScreen.AddDevice)}>
@@ -73,33 +77,39 @@ export function SettingsScreen() {
   return (
     <SurveillanceBackground>
       <View style={styles.container}>
-        <Text style={styles.title}>Settings</Text>
-        <View style={styles.panel}>
-          {rows.map((row) => (
-            <TouchableOpacity key={row.key} style={styles.settingRow} activeOpacity={0.85} onPress={row.onToggle}>
-              <Text style={styles.settingLabel}>{row.label}</Text>
-              <View style={[styles.switch, row.value ? styles.switchOn : null]}>
-                <View style={[styles.switchKnob, row.value ? styles.switchKnobOn : null]} />
-              </View>
-            </TouchableOpacity>
-          ))}
+        <NetFocusHeader variant="back" />
+        <View style={styles.content}>
+          <Text style={styles.title}>Settings</Text>
+          <View style={styles.panel}>
+            {rows.map((row) => (
+              <TouchableOpacity key={row.key} style={styles.settingRow} activeOpacity={0.85} onPress={row.onToggle}>
+                <Text style={styles.settingLabel}>{row.label}</Text>
+                <View style={[styles.switch, row.value ? styles.switchOn : null]}>
+                  <View style={[styles.switchKnob, row.value ? styles.switchKnobOn : null]} />
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            activeOpacity={0.85}
+            onPress={() => {
+              actions.logout();
+            }}
+          >
+            <Text style={styles.logoutButtonText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.logoutButton}
-          activeOpacity={0.85}
-          onPress={() => {
-            actions.logout();
-          }}
-        >
-          <Text style={styles.logoutButtonText}>Sign Out</Text>
-        </TouchableOpacity>
+        <NetFocusBottomNavigation />
       </View>
     </SurveillanceBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.xl },
+  devicesContainer: { flex: 1, padding: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.xl },
+  container: { flex: 1 },
+  content: { flex: 1, padding: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.xl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { color: colors.textWhite, fontSize: 22, fontWeight: '800' as const },
   addButton: { backgroundColor: colors.deepBlueCtaStart, borderRadius: 12, paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
