@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">NetFocus</string>
+    <string name="brand_net">Net</string>
+    <string name="brand_focus">Focus</string>
+    <string name="brand_netfocus_upper">NETFOCUS</string>
+    <string name="brand_tagline">Empowering you with eyes everywhere</string>
+    <string name="brand_subtitle_cctv">CCTV Surveillance</string>
+    <string name="brand_subtitle_app">CCTV Surveillance App</string>
+    <string name="brand_solution">CCTV Solution</string>
+
+    <string name="feature_secure">Secure</string>
+    <string name="feature_remote">Remote</string>
+    <string name="feature_alerts">Alerts</string>
+    <string name="feature_multi_view">Multi View</string>
+    <string name="cta_get_started">Get Started</string>
+
+    <string name="login_title">Login</string>
+    <string name="login_username_hint">Username / Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_remember_me">Remember Me</string>
+    <string name="login_forgot_password">Forgot Password?</string>
+    <string name="login_button">Login</string>
+    <string name="login_or">OR</string>
+    <string name="login_create_account">Create New Account</string>
+
+    <string name="cd_menu">Open navigation menu</string>
+    <string name="cd_back">Go back</string>
+    <string name="cd_notifications">View surveillance alerts</string>
+    <string name="cd_more_options">More options</string>
+    <string name="cd_toggle_password">Toggle password visibility</string>
+    <string name="cd_fullscreen">Toggle fullscreen</string>
+    <string name="cd_camera_illustration">NetFocus CCTV camera and NVR hardware</string>
+</resources>

@@ -1,0 +1,6 @@
+{
+  "name": "NetFocus CCTV",
+  "description": "NetFocus CCTV surveillance UI with onboarding, login, home dashboard, multi-channel live view, playback timeline, PTZ controls, and device setup.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

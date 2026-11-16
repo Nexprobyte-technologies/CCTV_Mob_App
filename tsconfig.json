@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "react-native",
+    "types": [
+      "react-native",
+      "jest"
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "App.tsx",
+    "index.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ]
+}

@@ -1,0 +1,132 @@
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NetFocusBottomNavigation, NetFocusHeader, SurveillanceBackground } from '../components/NetFocusChrome';
+import { useNetFocus } from '../state';
+import { AppScreen } from '../types';
+import { colors } from '../theme';
+
+export function HomeScreen() {
+  const { derived, actions } = useNetFocus();
+
+  const shortcuts = [
+    { key: 'live', icon: '▣', title: 'Live View', onPress: () => actions.navigateTo(AppScreen.LiveView) },
+    { key: 'devices', icon: '▰', title: 'Devices', onPress: () => actions.navigateTo(AppScreen.Devices) },
+    { key: 'playback', icon: '▷', title: 'Playback', onPress: () => actions.openPlayback(false) },
+    { key: 'ptz', icon: '✥', title: 'PTZ Control', onPress: () => actions.openPlayback(true) },
+    { key: 'snapshot', icon: '◎', title: 'Snapshot', onPress: () => actions.setShowSnapshotsSheet(true) },
+    { key: 'settings', icon: '⚙', title: 'Settings', onPress: () => actions.navigateTo(AppScreen.Settings) },
+  ];
+
+  const deviceStats = [
+    { icon: '◉', value: derived.onlineDeviceCount, title: 'Online', tint: colors.onlineGreenBright },
+    { icon: '◉', value: derived.offlineDeviceCount, title: 'Offline', tint: colors.eventRed },
+    { icon: '▰', value: derived.nvrDvrCount, title: 'NVR/DVR' },
+    { icon: '▣', value: derived.ipCameraCount, title: 'IP Camera' },
+  ];
+
+  return (
+    <SurveillanceBackground>
+      <View style={styles.screen}>
+        <NetFocusHeader />
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <Image
+            source={require('../assets/images/home-hero.jpg')}
+            style={styles.hero}
+            resizeMode="cover"
+            accessibilityLabel="NetFocus CCTV solution"
+          />
+
+          <View style={styles.shortcutGrid}>
+            {shortcuts.map((shortcut, index) => (
+              <TouchableOpacity
+                key={shortcut.key}
+                style={[styles.shortcut, index === 0 && styles.shortcutPrimary]}
+                activeOpacity={0.82}
+                onPress={shortcut.onPress}
+                accessibilityRole="button"
+              >
+                <Text style={styles.shortcutIcon}>{shortcut.icon}</Text>
+                <Text style={styles.shortcutTitle}>{shortcut.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <TouchableOpacity
+            style={styles.statusCard}
+            activeOpacity={0.85}
+            onPress={() => actions.navigateTo(AppScreen.Devices)}
+          >
+            <View style={styles.statusHeading}>
+              <View style={styles.statusCheck}><Text style={styles.statusCheckText}>✓</Text></View>
+              <Text style={styles.statusHeadingText}>Device Status</Text>
+              <Text style={styles.statusChevron}>›</Text>
+            </View>
+            <View style={styles.statsRow}>
+              {deviceStats.map((item, index) => (
+                <View key={item.title} style={[styles.stat, index > 0 && styles.statDivider]}>
+                  <Text style={[styles.statIcon, item.tint ? { color: item.tint } : null]}>{item.icon}</Text>
+                  <Text style={styles.statValue}>{item.value}</Text>
+                  <Text style={styles.statTitle}>{item.title}</Text>
+                </View>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
+        <NetFocusBottomNavigation />
+      </View>
+    </SurveillanceBackground>
+  );
+}
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.deepNavyBg },
+  scroll: { flex: 1 },
+  content: { padding: 10, paddingBottom: 12 },
+  hero: { width: '100%', height: 118, borderRadius: 16, marginBottom: 12 },
+  shortcutGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginBottom: 12 },
+  shortcut: {
+    width: '31.6%',
+    minHeight: 112,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0A2A50',
+    borderWidth: 1,
+    borderColor: '#174c7b',
+    borderRadius: 18,
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+  },
+  shortcutPrimary: { backgroundColor: '#0879d3', borderColor: '#18aef5' },
+  shortcutIcon: { color: colors.textWhite, fontSize: 33, lineHeight: 42, fontWeight: '700' as const },
+  shortcutTitle: { color: colors.textWhite, fontSize: 14, lineHeight: 18, fontWeight: '800' as const, textAlign: 'center' },
+  statusCard: {
+    overflow: 'hidden',
+    backgroundColor: '#08264b',
+    borderWidth: 1,
+    borderColor: '#1e5c90',
+    borderRadius: 18,
+  },
+  statusHeading: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    backgroundColor: '#0b3766',
+    borderBottomWidth: 1,
+    borderColor: '#1e5c90',
+  },
+  statusCheck: { width: 25, height: 25, borderRadius: 13, backgroundColor: colors.onlineGreen, alignItems: 'center', justifyContent: 'center' },
+  statusCheckText: { color: colors.textWhite, fontSize: 17, fontWeight: '900' as const },
+  statusHeadingText: { flex: 1, color: colors.textWhite, fontSize: 14, fontWeight: '800' as const, marginLeft: 9 },
+  statusChevron: { color: colors.textWhite, fontSize: 28, lineHeight: 30 },
+  statsRow: { flexDirection: 'row', minHeight: 110, paddingVertical: 10 },
+  stat: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
+  statDivider: { borderLeftWidth: 1, borderColor: '#28557e' },
+  statIcon: { color: colors.textWhite, fontSize: 23, lineHeight: 26 },
+  statValue: { color: colors.textWhite, fontSize: 23, lineHeight: 27, fontWeight: '800' as const },
+  statTitle: { color: colors.textWhite, fontSize: 11, lineHeight: 15, fontWeight: '700' as const, textAlign: 'center' },
+});
