@@ -6,6 +6,7 @@
 export enum AppScreen {
   Welcome = 'Welcome',
   Login = 'Login',
+  CreateAccount = 'CreateAccount',
   Home = 'Home',
   LiveView = 'LiveView',
   Playback = 'Playback',

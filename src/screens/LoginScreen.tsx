@@ -14,6 +14,7 @@ import {
 import { useNetFocus } from '../state';
 import { colors, spacing } from '../theme';
 import { AppIcon } from '../components/AppIcon';
+import { AppScreen } from '../types';
 
 export function LoginScreen() {
   const { state, actions } = useNetFocus();
@@ -166,7 +167,7 @@ export function LoginScreen() {
           <TouchableOpacity
             style={styles.createButton}
             activeOpacity={0.85}
-            onPress={() => actions.showMessage('Contact your administrator to create an account.')}
+            onPress={() => actions.navigateTo(AppScreen.CreateAccount)}
           >
             <AppIcon name="account-plus-outline" size={20} color="#D7BB72" />
             <Text style={styles.createButtonText}>Create New Account</Text>

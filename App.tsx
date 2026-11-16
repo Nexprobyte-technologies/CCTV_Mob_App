@@ -6,6 +6,7 @@ import { NetFocusProvider, useNetFocus } from './src/state';
 import { AppScreen } from './src/types';
 import { colors, spacing } from './src/theme';
 import { AddDeviceScreen } from './src/screens/AddDeviceScreen';
+import { CreateAccountScreen } from './src/screens/CreateAccountScreen';
 import { DevicesListScreen, SettingsScreen } from './src/screens/DevicesAndSettingsScreens';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LiveViewScreen } from './src/screens/LiveViewScreen';
@@ -35,6 +36,8 @@ function NetFocusApp() {
         return <WelcomeScreen />;
       case AppScreen.Login:
         return <LoginScreen />;
+      case AppScreen.CreateAccount:
+        return <CreateAccountScreen />;
       case AppScreen.Home:
         return <HomeScreen />;
       case AppScreen.LiveView:
