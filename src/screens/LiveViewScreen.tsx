@@ -182,7 +182,7 @@ export function LiveViewScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.deepNavyBg },
+  screen: { flex: 1, marginTop: 50, backgroundColor: colors.deepNavyBg },
   topTabs: {
     minHeight: 66,
     flexDirection: 'row',

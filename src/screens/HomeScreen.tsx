@@ -96,7 +96,7 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.deepNavyBg },
+  screen: { flex: 1, marginTop: 50, backgroundColor: colors.deepNavyBg },
   scroll: { flex: 1 },
   content: { padding: 10, paddingBottom: 12 },
   hero: { width: '100%', height: 118, borderRadius: 16, marginBottom: 12 },

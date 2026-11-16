@@ -308,7 +308,7 @@ export function PlaybackPtzScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.deepNavyBg },
+  screen: { flex: 1, marginTop: 50, backgroundColor: colors.deepNavyBg },
   modeTabs: { flexDirection: 'row', paddingHorizontal: 13, paddingTop: 10, paddingBottom: 8, gap: 9, backgroundColor: '#061a36' },
   modeTab: { flex: 1, height: 39, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#0a294c', borderWidth: 1, borderColor: '#527b9f', borderRadius: 11 },
   modeTabActive: { backgroundColor: '#09b8e9', borderColor: '#30ddff' },

@@ -108,7 +108,7 @@ export function SettingsScreen() {
 
 const styles = StyleSheet.create({
   devicesContainer: { flex: 1, padding: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.xl },
-  container: { flex: 1 },
+  container: { flex: 1, marginTop: 50 },
   content: { flex: 1, padding: spacing.lg, paddingTop: spacing.xl, paddingBottom: spacing.xl },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { color: colors.textWhite, fontSize: 22, fontWeight: '800' as const },
